@@ -5,22 +5,21 @@ import com.example.concurrencycasestudy.reservation.MakeReservationService
 import com.example.concurrencycasestudy.reservation.ReservationRepository
 import com.example.concurrencycasestudy.restaurant.Restaurant
 import com.example.concurrencycasestudy.restaurant.RestaurantRepository
+import io.kotest.assertions.throwables.shouldThrow
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
-import org.springframework.test.context.jdbc.Sql
 import org.springframework.transaction.annotation.Transactional
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
-import java.time.Duration
 
 @Testcontainers
 @SpringBootTest
 @Transactional
-class BasicFunctionalityTest @Autowired constructor(
+class BasicReservationFunctionalityTest @Autowired constructor(
   private val sut: MakeReservationService,
   private val restaurantRepository: RestaurantRepository,
   private val reservationRepository: ReservationRepository
@@ -31,7 +30,6 @@ class BasicFunctionalityTest @Autowired constructor(
     @Container
     @ServiceConnection
     val psql = PostgreSQLContainer("postgres")
-      // .withMinimumRunningDuration(Duration.ofSeconds(10)) // see https://github.com/testcontainers/testcontainers-java/discussions/7299
   }
 
   @BeforeEach
@@ -46,6 +44,6 @@ class BasicFunctionalityTest @Autowired constructor(
   @Test
   fun `중복 예약은 불가하다`() {
     sut.reserve(MakeReservationRequest(123, 7777))
-    sut.reserve(MakeReservationRequest(123, 7777))
+    shouldThrow<IllegalStateException> { sut.reserve(MakeReservationRequest(123, 7777)) }
   }
 }
