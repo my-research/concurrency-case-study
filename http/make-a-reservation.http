@@ -1,0 +1,21 @@
+### 성공
+POST http://localhost:8080/reservations
+Content-Type: application/json
+
+{
+  "customerId": 12453,
+  "restaurantId": 7777
+}
+
+
+### 테스트용 예약 요청
+POST http://localhost:8080/reservations
+Content-Type: application/json
+
+{
+  "customerId": 123,
+  "restaurantId": 456
+}
+
+### 또 다른 ID로 테스트
+GET http://localhost:8080/restaurants/7777
