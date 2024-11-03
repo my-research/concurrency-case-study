@@ -7,7 +7,7 @@ import jakarta.persistence.Id
 
 @Entity(name = "restaurants")
 data class Restaurant(
-  @Id @GeneratedValue(strategy = GenerationType.AUTO)
+  @Id
   val id: Long? = null,
   val name: String,
   var numberOfRemainingTable: Int,
