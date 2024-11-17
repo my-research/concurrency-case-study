@@ -13,6 +13,7 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
+import java.lang.ref.WeakReference
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -29,11 +30,14 @@ class MultiThreaded_ReserveTest @Autowired constructor(
         @ServiceConnection
         val psql = PostgreSQLContainer("postgres")
         // .withMinimumRunningDuration(Duration.ofSeconds(10)) // see https://github.com/testcontainers/testcontainers-java/discussions/7299
+
     }
 
     @BeforeEach
     fun setUp() {
         restaurantRepository.save(Restaurant(7777, "TGI", 10))
+
+        val a: String? by Weak("a")
     }
 
     @Test
