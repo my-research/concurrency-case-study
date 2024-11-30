@@ -36,8 +36,6 @@ class MultiThreaded_ReserveTest @Autowired constructor(
     @BeforeEach
     fun setUp() {
         restaurantRepository.save(Restaurant(7777, "TGI", 10))
-
-        val a: String? by Weak("a")
     }
 
     @Test
